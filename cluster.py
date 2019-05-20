@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 class Cluster:
     def __init__(self, corpus):
         self.corpus = corpus
-        self.model = KMeans(n_clusters=3, max_iter=1000)
+        self.model = KMeans(n_clusters=10, max_iter=1000)
         self.responses = self.load_json('responses.json')
         self.vectorizer = TfidfVectorizer(
             stop_words=self.load_json('stop_words.json')
@@ -77,7 +77,7 @@ for message in model.load_json('messages.json'):
     prediction = model.predict(message)
     clusters[prediction].append(message)
 
-for cluster in clusters:
+for cluster in sorted(clusters):
     model.show_cluster_info(cluster)
     print('-'*10)
     for message in clusters[cluster][:20]:
